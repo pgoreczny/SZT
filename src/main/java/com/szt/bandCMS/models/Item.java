@@ -30,6 +30,10 @@ public class Item {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Item() {
     }
 

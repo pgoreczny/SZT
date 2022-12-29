@@ -324,7 +324,6 @@ header {
 	padding: 142px 0 170px 0;
 	z-index: 11;
 	text-align: center;
-	background: url(../img/bg_pic1.jpg) center top fixed no-repeat;
 }
 header.indent {
 	padding: 51px 0 35px 0;
@@ -478,12 +477,6 @@ footer span {
 }
 .shows-box, .news-box {
 	margin-bottom: 41px;
-}
-.subscribe-box {
-	background: url(../img/bg_pic2.jpg) center top fixed no-repeat;
-	padding: 103px 0;
-	text-align: center;
-	overflow: hidden;
 }
 .subscribe-box span {
 	display: block;

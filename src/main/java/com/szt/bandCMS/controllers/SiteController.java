@@ -125,12 +125,6 @@ public class SiteController {
         Map<String, String> items = itemService.getItemsByPage(Arrays.asList("simple", "common"));
         Map<String, String> socialMedia = itemService.getItemsByPage("socialMedia");
 
-
-        //TODO
-        items.put("logo", "/img/logo.png");
-
-
-
         model.addAttribute("subsites", subsites);
         model.addAttribute("items", items);
         model.addAttribute("socialMedia", socialMedia);

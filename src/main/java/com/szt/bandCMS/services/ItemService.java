@@ -4,6 +4,7 @@ import com.szt.bandCMS.models.Item;
 import com.szt.bandCMS.repositories.ItemRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,5 +28,11 @@ public class ItemService {
                 .map(page -> itemRepository.findByPage(page))
                 .flatMap(List::stream)
                 .collect(Collectors.toMap(Item::getKey, Item::getText));
+    }
+    @Transactional
+    public void saveItem(String key, String value) {
+        Item toChange = itemRepository.findByKey(key);
+        toChange.setText(value);
+        itemRepository.save(toChange);
     }
 }

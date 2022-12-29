@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--CSS-->
+    <style>
+        .menuBlock {
+            width: 20vw;
+            height: 20vw;
+            background-color: green;
+            margin: 1vw 5vw 4vw 4vw;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 20vw;
+            font-size: 3em;
+            color: black;
+        }
+        a{
+            text-decoration: none !important;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+</head>
+<body>
+<a th:href="@{/admin/settings}"><div style="border: solid; float:right; margin-right: 1em; margin-top: 1em; font-size: 3m;">Settings</div></a>
+<span style="flex-wrap: wrap; display: flex;">
+    <a th:href="@{/admin/main}"><div class="menuBlock">Main page</div></a>
+    <a th:href="@{/admin/news}"><div class="menuBlock">News</div></a>
+    <a th:href="@{/admin/events}"><div class="menuBlock">Events</div></a>
+    <a th:href="@{/admin/albums}"><div class="menuBlock">Albums</div></a>
+    <a th:href="@{/admin/subpages}"><div class="menuBlock">Subpages</div></a>
+    <a th:href="@{/admin/social}"><div class="menuBlock">Social media</div></a>
+</span>
+</body>
+</html>

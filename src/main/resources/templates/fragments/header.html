@@ -2,17 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
-<div th:fragment="header (subsites, logo)" class="container">
-    <h1 class="navbar-brand navbar-brand_"><a href="/"><img th:src="${logo}" alt="logo"></a></h1>
-    <nav class="navbar navbar-default navbar-static-top tm_navbar clearfix" role="navigation">
-        <ul class="nav sf-menu clearfix">
-            <li th:each="site : ${subsites}"><a th:href="${site.path}" th:text="${site.title}"><em></em></a>
-                <i th:if="${#lists.size(site.children)>0}">V</i>
+<header th:style="'background-size: 100%!important; background:url(' + ${logo} + ') center top fixed no-repeat;'" th:fragment="header (subsites, logo)"       >
+    <div class="container">
+        <!--    <h1 class="navbar-brand navbar-brand_"><a href="/"><img th:src="${logo}" alt="logo"></a></h1>-->
+        <nav class="navbar navbar-default navbar-static-top tm_navbar clearfix" role="navigation">
+            <ul class="nav sf-menu clearfix">
+                <li th:each="site : ${subsites}"><a th:href="${site.path}" th:text="${site.title}"><em></em></a>
+                    <i th:if="${#lists.size(site.children)>0}">V</i>
                     <ul th:if="${#lists.size(site.children)>0}" class="submenu">
-                        <li th:each="child : ${site.children}"><a th:href="${child.path}" th:text="${child.title}"></a></li>
+                        <li th:each="child : ${site.children}"><a th:href="${child.path}" th:text="${child.title}"></a>
+                        </li>
                     </ul>
-            </li>
-        </ul>
-    </nav>
-</div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 </html>

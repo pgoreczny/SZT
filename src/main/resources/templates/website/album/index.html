@@ -27,11 +27,7 @@
 </head>
 <body>
 <!--header-->
-<header class="indent">
-  <div class="container">
-    <header th:insert="fragments/header.html :: header(${subsites}, ${items['logo']})"></header>
-  </div>
-</header>
+<header th:replace="fragments/header.html :: header(${subsites}, ${items['logo']})"></header>
 <div class="global indent">
   <!--content-->
   <div class="container">

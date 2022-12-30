@@ -1,31 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>
+        Main page options
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/fonts/font-awesome.css}">
 </head>
 <body>
-<div class="container" style="max-width: 500px">
-    <h3 class="mb-3">Spring Boot Image Upload example</h3>
+<div class="container" style="max-width: 80vw; margin-top: 2em;">
+    <h1>
+        Current main page head
+    </h1>
+    <header th:replace="fragments/header.html :: header(${subsites}, ${items['logo']}, ${items['color']})"></header>
+    <div class="global">
+        <!--content-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 center-box wow fadeInDown" data-wow-duration="500">
+                    <p th:text="${items['head_text']}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <h1>
+        Editor
+    </h1>
+    <div th:if="${!#strings.isEmpty(success)}"
+         class="alert alert-success"
+         role="alert">
+        [[${success}]]
+    </div>
+
+    <div th:if="${!#strings.isEmpty(error)}"
+         class="alert alert-danger"
+         role="alert">
+        [[${error}]]
+    </div>
 
     <form
             id="uploadForm"
             method="post"
             th:action="@{/admin/uploadLogo}"
             enctype="multipart/form-data">
-        <input id="input-file" type="file" name="file" accept="image/png, image/jpeg" />
+        <input id="input-file" type="file" name="file" accept="image/png, image/jpeg"/>
         <button class="btn btn-sm btn-outline-success float-right" type="submit">
-            Upload
+            Set the header image
         </button>
     </form>
-
-<!--    <div-->
-<!--            th:if="${message != null}"-->
-<!--            class="alert alert-secondary alert-dismissible fade show text-center message mt-3"-->
-<!--            role="alert">-->
-<!--        [[${message}]]-->
-<!--        <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">-->
-<!--            <span aria-hidden="true">×</span>-->
-<!--        </button>-->
-<!--    </div>-->
+    <form method="post"
+          th:action="@{/admin/main}">
+        <div class="form-group">
+            <label for="fronttext">Enter the page header text</label>
+            <textarea name="head_text" type="textarea" class="form-control" id="fronttext" aria-describedby="fronttext"
+                      placeholder="Enter text"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="fontcolor">Menu font color</label>
+            <select style="width: 100%;" class="form-select" name="color" id="fontcolor">
+                <option th:each="option : ${colors}"
+                        th:text="${option}"
+                        th:value="${#strings.toLowerCase(option)}"
+                        th:selected="${items['color']==#strings.toLowerCase(option)}">
+                </option>
+            </select>
+        </div>
+        <button style="margin-top: 1em;" type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </body>
 </html>

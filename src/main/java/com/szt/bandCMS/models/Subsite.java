@@ -2,6 +2,7 @@ package com.szt.bandCMS.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,13 @@ public class Subsite {
 
     @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
     List<Subsite> children;
+
+    @Column
+    Date edited;
+
+    @ManyToOne
+    @JoinColumn(name="username")
+    User editedBy;
 
     public Subsite() {
     }

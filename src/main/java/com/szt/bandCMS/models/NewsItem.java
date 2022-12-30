@@ -1,8 +1,6 @@
 package com.szt.bandCMS.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,6 +16,13 @@ public class NewsItem {
 
     @Column
     String content;
+
+    @Column
+    Date edited;
+
+    @ManyToOne
+    @JoinColumn(name="username")
+    User editedBy;
 
     public Date getDate() {
         return date;

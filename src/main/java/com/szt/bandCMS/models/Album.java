@@ -1,8 +1,7 @@
 package com.szt.bandCMS.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Album {
@@ -23,6 +22,13 @@ public class Album {
 
     @Column
     String code;
+
+    @Column
+    Date edited;
+
+    @ManyToOne
+    @JoinColumn(name="username")
+    User editedBy;
 
     public long getId() {
         return id;

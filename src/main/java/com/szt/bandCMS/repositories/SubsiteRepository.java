@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface SubsiteRepository extends CrudRepository<Subsite, Long> {
     List<Subsite> findAll();
+
     List<Subsite> findAllByOrderByPositionAsc();
 }

@@ -2,7 +2,6 @@ package com.szt.bandCMS.security;
 
 import com.szt.bandCMS.models.User;
 import com.szt.bandCMS.repositories.UserRepository;
-import com.szt.bandCMS.services.SecurityUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,8 +18,6 @@ import java.util.Optional;
 
 @Component
 public class AuthProvider implements AuthenticationProvider {
-    @Autowired
-    private SecurityUserDetailsService userDetailsService;
     @Autowired
     private UserRepository userRepository;
 
@@ -51,8 +48,8 @@ public class AuthProvider implements AuthenticationProvider {
     }
 
     public PasswordEncoder passwordEncoder() {
-        DelegatingPasswordEncoder delPasswordEncoder=  (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        BCryptPasswordEncoder bcryptPasswordEncoder =new BCryptPasswordEncoder();
+        DelegatingPasswordEncoder delPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
         delPasswordEncoder.setDefaultPasswordEncoderForMatches(bcryptPasswordEncoder);
         return delPasswordEncoder;
     }

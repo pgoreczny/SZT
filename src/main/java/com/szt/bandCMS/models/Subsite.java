@@ -28,18 +28,18 @@ public class Subsite {
     @Column
     boolean builtIn;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional=true)
-    @JoinColumn(name="parent_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "parent_id")
     Subsite parent;
 
-    @OneToMany(mappedBy="parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Subsite> children;
 
     @Column
     Date edited;
 
     @ManyToOne
-    @JoinColumn(name="username")
+    @JoinColumn(name = "username")
     User editedBy;
 
     public Subsite() {

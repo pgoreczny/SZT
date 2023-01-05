@@ -27,8 +27,8 @@ public class SecurityConfig {
     }
 
     public PasswordEncoder passwordEncoder() {
-        DelegatingPasswordEncoder delPasswordEncoder=  (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        BCryptPasswordEncoder bcryptPasswordEncoder =new BCryptPasswordEncoder();
+        DelegatingPasswordEncoder delPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
         delPasswordEncoder.setDefaultPasswordEncoderForMatches(bcryptPasswordEncoder);
         return delPasswordEncoder;
     }
@@ -44,8 +44,10 @@ public class SecurityConfig {
                 .formLogin()
                 .permitAll()
                 .and()
-                .logout() .invalidateHttpSession(true)
-                .clearAuthentication(true) .permitAll();
+                .logout()
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true).permitAll();
         return http.build();
     }
 }

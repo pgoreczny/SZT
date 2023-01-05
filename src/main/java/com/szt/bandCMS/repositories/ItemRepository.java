@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Long> {
-    List<Item>findByPage(String page);
+    List<Item> findByPage(String page);
+
     Item findByKey(String key);
 }

@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -85,15 +88,14 @@ public class SiteController {
         return "website/album/index";
     }
 
-    @GetMapping(value = "/albums/{album}")
-    public String getAlbumPage(Model model, @PathVariable(value = "album") String album) {
-        Optional<Album> albumData = albumService.getAlbumByName(album);
+    @GetMapping(value = "/albums/{id}")
+    public String getAlbumPage(Model model, @PathVariable(value = "id") long id) {
+        Optional<Album> albumData = albumService.getAlbumById(id);
         List<Album> albums = albumService.getAlbums();
         List<Subsite> subsites = subsitesService.getHeadSubsites();
         Map<String, String> items = itemService.getItemsByPage(Arrays.asList("albumSpecific", "common"));
         Map<String, String> socialMedia = itemService.getItemsByPage("socialMedia");
 
-        albumData = albums.stream().filter(a -> a.getCode().equals(album)).findFirst();
         if (albumData.isPresent()) {
             model.addAttribute("album", albumData.get());
             model.addAttribute("subsites", subsites);

@@ -7,11 +7,8 @@
         <ul class="follow_icon">
             <li th:if="${socialMedia['facebook']!=''}"><a th:href="${socialMedia['facebook']}"><img th:src="@{/img/follow_icon1.png}" alt=""></a></li>
             <li th:if="${socialMedia['twitter']!=''}"><a th:href="${socialMedia['twitter']}"><img th:src="@{/img/follow_icon3.png}" alt=""></a></li>
-            <li th:if="${socialMedia['googlePlus']!=''}"><a th:href="${socialMedia['googlePlus']}"><img th:src="@{/img/follow_icon4.png}" alt=""></a></li>
+            <li th:if="${socialMedia['instagram']!=''}"><a th:href="${socialMedia['instagram']}"><img th:src="@{/img/follow_icon5.png}" alt=""></a></li>
         </ul>
-    </div>
-    <div class="col-lg-2 col-md-2 col-sm-2 center">
-        <figure><img th:src="${logo}" alt="logo"></figure>
     </div>
 </div>
 </html>

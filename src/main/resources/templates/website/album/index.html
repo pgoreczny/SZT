@@ -37,7 +37,7 @@
         <div th:each="album: ${albums}" class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
           <div class="thumb-pad7 maxheight">
             <div class="thumbnail">
-              <figure><img th:src="${album.photoPath}" alt=""></figure>
+              <figure><img style="width: 370px; height: 259px;" th:src="${album.photoPath}" alt=""></figure>
               <div class="caption">
                 <h4 th:text="${album.title}"></h4>
                 <p th:text="${album.shortDesc}"></p>

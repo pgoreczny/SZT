@@ -1,12 +1,11 @@
 package com.szt.bandCMS.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Item {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     long id;
 
     @Column

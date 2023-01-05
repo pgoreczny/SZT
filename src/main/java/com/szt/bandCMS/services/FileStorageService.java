@@ -8,7 +8,6 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 @Service
 public class FileStorageService {
@@ -27,8 +26,7 @@ public class FileStorageService {
             if (e instanceof FileAlreadyExistsException) {
                 Files.delete(path);
                 return save(file, filename);
-            }
-            else {
+            } else {
                 throw new IOException();
             }
         }

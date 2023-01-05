@@ -43,7 +43,7 @@
                     <span th:each="event : ${events}">
                         <div class="thumb-pad2">
                         <div class="thumbnail">
-                            <figure><img th:src="${event.photoUrl}" alt=""></figure>
+                            <figure><img style="width: 369px; height: 190px;" th:src="${event.photoUrl}" alt=""></figure>
                             <div class="caption">
                                 <p class="description" th:text="${event.startDate + ', ' + event.place}"></p>
                                 <p class="title" th:text="${event.title}"></p>

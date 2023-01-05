@@ -22,4 +22,16 @@ public class AlbumService {
     public Optional<Album> getAlbumByName(String album) {
         return albumRepository.findByTitle(album);
     }
+
+    public Optional<Album> getAlbumById(long id) {
+        return albumRepository.findById(id);
+    }
+
+    public void save(Album album) {
+        albumRepository.save(album);
+    }
+
+    public void delete(long id) {
+        albumRepository.deleteById(id);
+    }
 }

@@ -6,6 +6,7 @@ import java.util.Date;
 @Entity
 public class Album {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     long id;
 
     @Column
@@ -27,7 +28,7 @@ public class Album {
     Date edited;
 
     @ManyToOne
-    @JoinColumn(name="username")
+    @JoinColumn(name = "username")
     User editedBy;
 
     public long getId() {
@@ -52,6 +53,34 @@ public class Album {
 
     public String getLongDesc() {
         return longDesc;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
+    public void setLongDesc(String longDesc) {
+        this.longDesc = longDesc;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setEdited(Date edited) {
+        this.edited = edited;
+    }
+
+    public void setEditedBy(User editedBy) {
+        this.editedBy = editedBy;
     }
 
     public Album() {

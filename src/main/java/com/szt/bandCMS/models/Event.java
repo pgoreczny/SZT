@@ -1,17 +1,22 @@
 package com.szt.bandCMS.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Event {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     long id;
 
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date startDate;
 
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date endDate;
 
     @Column
@@ -33,8 +38,12 @@ public class Event {
     Date edited;
 
     @ManyToOne
-    @JoinColumn(name="username")
+    @JoinColumn(name = "username")
     User editedBy;
+
+    public long getId() {
+        return id;
+    }
 
     public Date getStartDate() {
         return startDate;
@@ -66,6 +75,38 @@ public class Event {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setEdited(Date edited) {
+        this.edited = edited;
+    }
+
+    public void setEditedBy(User editedBy) {
+        this.editedBy = editedBy;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Event() {

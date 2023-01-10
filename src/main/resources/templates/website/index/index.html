@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon">
-    <link rel="shortcut icon" href="@{/img/favicon.ico}" type="image/x-icon" />
+    <link rel="shortcut icon" href="@{/img/favicon.ico}" type="image/x-icon"/>
     <meta name="description" content="Your description">
     <meta name="keywords" content="Your keywords">
     <meta name="author" content="Your name">
-    <meta name = "format-detection" content = "telephone=no" />
+    <meta name="format-detection" content="telephone=no"/>
     <!--CSS-->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/animate.css}">
     <link rel="stylesheet" th:href="@{/fonts/font-awesome.css}">
@@ -26,24 +26,25 @@
     <script type="text/javascript" th:src="@{/js/sForm.js}"></script>
 </head>
 <body>
-    <header th:replace="fragments/header.html :: header(${subsites}, ${items['logo']}, ${items['color']})"></header>
-    <div class="global">
-        <!--content-->
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 center-box wow fadeInDown" data-wow-duration="500">
-                    <p th:text="${items['head_text']}"></p>
-                </div>
+<header th:replace="fragments/header.html :: header(${subsites}, ${items['logo']}, ${items['color']})"></header>
+<div class="global">
+    <!--content-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 center-box wow fadeInDown" data-wow-duration="500">
+                <p th:text="${items['head_text']}"></p>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-12 shows-box wow fadeInLeft">
-                    <h3>Latest Shows</h3>
-                    <span th:each="event : ${events}">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 shows-box wow fadeInLeft">
+                <h3>Latest Shows</h3>
+                <span th:each="event : ${events}">
                         <div class="thumb-pad2">
                         <div class="thumbnail">
-                            <figure><img style="width: 369px; height: 190px;" th:src="${event.photoUrl}" alt=""></figure>
+                            <figure><img style="width: 369px; height: 190px;" th:src="${event.photoUrl}"
+                                         alt=""></figure>
                             <div class="caption">
                                 <p class="description" th:text="${event.startDate + ', ' + event.place}"></p>
                                 <p class="title" th:text="${event.title}"></p>
@@ -52,14 +53,15 @@
                         </div>
                     </div>
                     </span>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 news-box wow fadeInRight">
-                    <h3><span>Recent News</span></h3>
-                    <span th:each="newsItem : ${news}">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 news-box wow fadeInRight">
+                <h3><span>Recent News</span></h3>
+                <span th:each="newsItem : ${news}">
                         <div class="thumb-pad3">
                             <div class="thumbnail">
                                 <div class="badge">
-                                    <div><time th:text="${#dates.format(newsItem.date, 'dd')}"}></time><span th:text="${#dates.format(newsItem.date, 'MM')}"></span></div>
+                                    <div><time th:text="${#dates.format(newsItem.date, 'dd')}" }></time><span
+                                            th:text="${#dates.format(newsItem.date, 'MM')}"></span></div>
                                     <a th:text="${#dates.format(newsItem.date, 'YYYY')}"></a>
                                     <em></em>
                                 </div>
@@ -70,14 +72,14 @@
                             </div>
                         </div>
                     </span>
-                </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <footer th:insert="fragments/footer.html :: footer(${socialMedia}, ${items['logo']})"></footer>
-    </div>
-    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/tm-scripts.js}"></script>
-    </body>
+</div>
+<div class="container">
+    <footer th:insert="fragments/footer.html :: footer(${socialMedia}, ${items['logo']})"></footer>
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/tm-scripts.js}"></script>
+</body>
 </html>

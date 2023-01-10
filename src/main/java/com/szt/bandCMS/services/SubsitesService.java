@@ -6,6 +6,7 @@ import com.szt.bandCMS.repositories.SubsiteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +35,36 @@ public class SubsitesService {
                 .get()
                 .setChildren(albumRepository.findAll()
                         .stream()
-                        .map(album -> new Subsite(album.getCode(), album.getTitle(), album.getLongDesc(),0, String.format("/albums/%d", album.getId())))
+                        .map(album -> new Subsite(album.getCode(), album.getTitle(), album.getLongDesc(),0, String.format("/albums/%d", album.getId(), true)))
                         .collect(Collectors.toList()));
         return subsites;
+    }
+
+    public Optional<Subsite> getSubsiteByName(String name) {
+        return subsiteRepository.findById(name);
+    }
+
+    public List<String>availableParents(String name) {
+        List<String>parents = getHeadSubsites()
+                .stream()
+                .filter(subsite1 -> !subsite1.getName().equals(name))
+                .map(subsite1 -> subsite1.getName()).collect(Collectors.toList());
+        parents.add("");
+        return parents;
+    }
+
+    public void save(Subsite subsite) {
+        subsiteRepository.save(subsite);
+    }
+
+    public void delete(String name) {
+        subsiteRepository.deleteById(name);
+    }
+    public void deleteByParent(String name) {
+        subsiteRepository.deleteByParent(name);
+    }
+
+    public int getMaxPosition() {
+        return subsiteRepository.findMaxPosition();
     }
 }

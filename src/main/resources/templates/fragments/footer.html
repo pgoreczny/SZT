@@ -5,9 +5,12 @@
 <div th:fragment="footer (socialMedia, logo)">
     <div class="col-lg-5 col-md-5 col-sm-5">
         <ul class="follow_icon">
-            <li th:if="${socialMedia['facebook']!=''}"><a th:href="${socialMedia['facebook']}"><img th:src="@{/img/follow_icon1.png}" alt=""></a></li>
-            <li th:if="${socialMedia['twitter']!=''}"><a th:href="${socialMedia['twitter']}"><img th:src="@{/img/follow_icon3.png}" alt=""></a></li>
-            <li th:if="${socialMedia['instagram']!=''}"><a th:href="${socialMedia['instagram']}"><img th:src="@{/img/follow_icon5.png}" alt=""></a></li>
+            <li th:if="${socialMedia['facebook']!=''}"><a th:href="${socialMedia['facebook']}"><img
+                    th:src="@{/img/follow_icon1.png}" alt=""></a></li>
+            <li th:if="${socialMedia['twitter']!=''}"><a th:href="${socialMedia['twitter']}"><img
+                    th:src="@{/img/follow_icon3.png}" alt=""></a></li>
+            <li th:if="${socialMedia['instagram']!=''}"><a th:href="${socialMedia['instagram']}"><img
+                    th:src="@{/img/follow_icon5.png}" alt=""></a></li>
         </ul>
     </div>
 </div>

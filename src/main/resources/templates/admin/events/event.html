@@ -8,10 +8,13 @@
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-<a th:href="@{/admin/settings}"><div style="border: solid; float:right; margin-right: 1em; margin-top: 1em; font-size: 3m;">Settings</div></a>
+<a th:href="@{/admin/settings}">
+    <div style="border: solid; float:right; margin-right: 1em; margin-top: 1em; font-size: 3m;">Settings</div>
+</a>
 <button style="margin-left: 2em; margin-top: 2em; float: left;"
         class="btn btn-info"
-        onclick="location.href='/admin/events'" type="button">Go back</button>
+        onclick="location.href='/admin/events'" type="button">Go back
+</button>
 <div class="container" style="max-width: 80vw; margin-top: 2em;">
     <div th:if="${!#strings.isEmpty(success)}"
          class="alert alert-success"
@@ -25,7 +28,7 @@
         [[${error}]]
     </div>
     <form method="post"
-          th:action="${'/admin/events/' + event.id}"enctype="multipart/form-data">
+          th:action="${'/admin/events/' + event.id}" enctype="multipart/form-data">
         <div class="form-group">
             <label for="image">Event picture</label>
             <figure><img style="width: 369px; height: 190px;" th:src="${event.photoUrl}" alt=""></figure>
@@ -45,18 +48,21 @@
         </div>
         <div class="form-group">
             <label for="place">Place</label>
-            <input type="text" th:value="${event.place}" name="place" class="form-control" id="place" aria-describedby="place"
+            <input type="text" th:value="${event.place}" name="place" class="form-control" id="place"
+                   aria-describedby="place"
                    placeholder="Place of the event">
         </div>
         <div class="form-group">
             <label for="startDate">Start date</label>
-            <input type="date" th:field="${event.startDate}" name="startDate" class="form-control" id="startDate" aria-describedby="startDate"
+            <input type="date" th:field="${event.startDate}" name="startDate" class="form-control" id="startDate"
+                   aria-describedby="startDate"
                    placeholder="Start of the event">
         </div>
 
         <div class="form-group">
             <label for="endDate">End date</label>
-            <input type="date" th:field="${event.endDate}" name="endDate" class="form-control" id="endDate" aria-describedby="endDate"
+            <input type="date" th:field="${event.endDate}" name="endDate" class="form-control" id="endDate"
+                   aria-describedby="endDate"
                    placeholder="End of the event">
         </div>
         <div class="form-group">

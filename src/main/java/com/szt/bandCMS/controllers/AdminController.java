@@ -106,12 +106,11 @@ public class AdminController {
             model.addAttribute("event", event.get());
             model.addAttribute("statuses", eventService.getAvailableStatuses(event.get().getStatus()));
         } else {
-            if (id == 0) {
-                Event newEvent = new Event();
-                newEvent.setStatus("Hidden");
-                model.addAttribute("event", newEvent);
-                model.addAttribute("statuses", eventService.getAvailableStatuses(""));
-            } else {
+            Event newEvent = new Event();
+            newEvent.setStatus("Hidden");
+            model.addAttribute("event", newEvent);
+            model.addAttribute("statuses", eventService.getAvailableStatuses(""));
+            if (id != 0) {
                 model.addAttribute("error", "Event with this name couldn't be found. Do you want to create it?");
             }
         }
@@ -181,10 +180,9 @@ public class AdminController {
         if (news.isPresent()) {
             model.addAttribute("news", news.get());
         } else {
-            if (id == 0) {
-                NewsItem newNews = new NewsItem();
-                model.addAttribute("news", newNews);
-            } else {
+            NewsItem newNews = new NewsItem();
+            model.addAttribute("news", newNews);
+            if (id != 0) {
                 model.addAttribute("error", "An article with this name couldn't be found. Do you want to create it?");
             }
         }
@@ -240,10 +238,9 @@ public class AdminController {
         if (album.isPresent()) {
             model.addAttribute("album", album.get());
         } else {
-            if (id == 0) {
-                Album newAlbum = new Album();
-                model.addAttribute("album", newAlbum);
-            } else {
+            Album newAlbum = new Album();
+            model.addAttribute("album", newAlbum);
+            if (id != 0) {
                 model.addAttribute("error", "Album with this name couldn't be found. Do you want to create it?");
             }
         }
@@ -279,7 +276,7 @@ public class AdminController {
         album.setTitle(title);
         album.setShortDesc(shortDesc);
         album.setLongDesc(longDesc);
-        String code = String.format("%s-%d", title.replaceAll("\\s+",""), id);
+        String code = String.format("%s-%d", title.replaceAll("\\s+", ""), id);
         album.setCode(code);
         album.setEditedBy(userService.getUser(principal.getName()));
         album.setEdited(new Date());
@@ -289,19 +286,118 @@ public class AdminController {
     }
 
     //endregion
-    //region <Subpages>
-    @GetMapping("/subpages")
-    public String getSubpages(Model model, @ModelAttribute("success") String success, @ModelAttribute("error") String error) {
+    //region <Subsites>
+    @GetMapping("/subsites")
+    public String getSubsites(Model model, @ModelAttribute("success") String success, @ModelAttribute("error") String error) {
+        List<Subsite> subsites = subsitesService.getHeadSubsites();
         model.addAttribute("success", success);
+        model.addAttribute("editPath", "/admin/subsites/{id}");
+        model.addAttribute("deletePath", "/admin/subsites/delete/{id}");
+        model.addAttribute("upPath", "/admin/subsites/up/{id}");
+        model.addAttribute("downPath", "/admin/subsites/down/{id}");
         model.addAttribute("error", error);
-        return "admin/subpage/index";
+        model.addAttribute("subsites", subsites);
+        return "admin/subsites/index";
     }
 
-    @GetMapping("/subpages/{subpage}")
-    public String getSpecificSubpage(Model model, @PathVariable(value = "subpage") String subpage, @ModelAttribute("success") String success, @ModelAttribute("error") String error) {
+    @GetMapping("/subsites/{subsite}")
+    public String getSubsite(Model model, @PathVariable(value = "subsite") String name, @ModelAttribute("success") String success, @ModelAttribute("error") String error) {
+        Optional<Subsite> subsite = subsitesService.getSubsiteByName(name);
         model.addAttribute("success", success);
         model.addAttribute("error", error);
-        return "admin/subpage/subpage";
+        if (subsite.isPresent()) {
+            model.addAttribute("subsite", subsite.get());
+            model.addAttribute("parents", subsitesService.availableParents(name));
+        } else {
+            Subsite newSubsite = new Subsite();
+            model.addAttribute("subsite", newSubsite);
+            model.addAttribute("parents", subsitesService.availableParents(""));
+            if (!name.equals("addnew")) {
+                model.addAttribute("error", "Subsite with this name couldn't be found. Do you want to create it?");
+            }
+        }
+        return "admin/subsites/subsite";
+    }
+
+    @GetMapping("/subsites/delete/{id}")
+    public RedirectView deleteSubsite(RedirectAttributes attributes,
+                                      @PathVariable(value = "id") String name) {
+        subsitesService.delete(name);
+        subsitesService.deleteByParent(name);
+        attributes.addFlashAttribute("success", "The subsite was deleted successfully");
+        return new RedirectView("/admin/subsites");
+    }
+
+    @PostMapping(path = "subsites/{name}")
+    public RedirectView saveSubsites(Principal principal,
+                                     RedirectAttributes attributes,
+                                     @PathVariable(value = "name") String name,
+                                     @RequestParam("title") String title,
+                                     @RequestParam("content") String content,
+                                     @RequestParam("parent") String parent
+    ) throws ParseException {
+        Optional<Subsite> oldRecord = subsitesService.getSubsiteByName(name);
+        Subsite subsite;
+        if (oldRecord.isPresent()) {
+            subsite = oldRecord.get();
+        } else {
+            subsite = new Subsite();
+            subsite.setName(title.replaceAll("\\s+", "_"));
+        }
+        subsite.setTitle(title);
+        subsite.setEditedBy(userService.getUser(principal.getName()));
+        subsite.setEdited(new Date());
+        Optional<Subsite> newParent = subsitesService.getSubsiteByName(parent);
+        if (newParent.isPresent()) {
+            subsite.setParent(newParent.get());
+            subsite.setPosition(newParent.get().getPosition());
+        } else {
+            subsite.setParent(null);
+            subsite.setPosition(subsitesService.getMaxPosition() + 1);
+        }
+        subsite.setContent(content);
+        subsitesService.save(subsite);
+        attributes.addFlashAttribute("success", "Subsite saved successfully");
+        return new RedirectView("/admin/subsites/" + subsite.getName());
+    }
+
+    @GetMapping("/subsites/{direction}/{id}")
+    public RedirectView moveSubsitePosition(@PathVariable("direction") String direction,
+                                            @PathVariable("id") String id,
+                                            RedirectAttributes attributes) {
+        List<Subsite> subsites = subsitesService.getHeadSubsites();
+        Optional<Subsite> moved = subsites.stream().filter(subsite -> subsite.getName().equals(id)).findFirst();
+        subsites.stream().filter(subsite -> subsite.getName().equals("Albums")).findFirst().get().getChildren().clear();
+        if (moved.isPresent()) {
+            int index = subsites.indexOf(moved.get());
+            if (direction.equals("up")) {
+                if (index > 0) {
+                    Subsite movedSite = subsitesService.getSubsiteByName(moved.get().getName()).get();
+                    Subsite other = subsites.get(index - 1);
+                    int temp = other.getPosition();
+                    other.setPosition(movedSite.getPosition());
+                    movedSite.setPosition(temp);
+                    subsitesService.save(movedSite);
+                    subsitesService.save(other);
+                }
+            }
+            if (direction.equals("down")) {
+                if (index < subsites.size() - 1) {
+                    Subsite other = subsites.get(index + 1);
+                    int temp = other.getPosition();
+                    Subsite movedSite = subsitesService.getSubsiteByName(moved.get().getName()).get();
+                    other.setPosition(movedSite.getPosition());
+                    movedSite.setPosition(temp);
+
+                    subsitesService.save(movedSite);
+                    subsitesService.save(other);
+                }
+            }
+        }
+        else {
+            attributes.addFlashAttribute("error", "The subsite couldn't be found");
+        }
+        return new RedirectView("/admin/subsites/");
     }
 
     //endregion

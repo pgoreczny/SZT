@@ -32,7 +32,7 @@ public class Subsite {
     @JoinColumn(name = "parent_id")
     Subsite parent;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Subsite> children;
 
     @Column
@@ -52,6 +52,16 @@ public class Subsite {
         this.position = position;
         this.path = path;
         this.children = new ArrayList<>();
+    }
+
+    public Subsite(String name, String title, String content, int position, String path, boolean builtIn) {
+        this.name = name;
+        this.title = title;
+        this.content = content;
+        this.position = position;
+        this.path = path;
+        this.children = new ArrayList<>();
+        this.builtIn = builtIn;
     }
 
     public String getName() {
@@ -84,6 +94,18 @@ public class Subsite {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public void setParent(Subsite parent) {
+        this.parent = parent;
+    }
+
+    public void setEdited(Date edited) {
+        this.edited = edited;
+    }
+
+    public void setEditedBy(User editedBy) {
+        this.editedBy = editedBy;
     }
 
     public String getPath() {
